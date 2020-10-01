@@ -4,7 +4,8 @@ var HtmlWebpackPlugin = require('html-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var autoprefixer = require('autoprefixer');
 var OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
-var UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+// var UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
 
 module.exports = {
     entry: {
@@ -151,23 +152,11 @@ module.exports = {
             canPrint: true
         })
     ],
-    // optimization:{
-    //     minimizer:[
-    //         new UglifyJsPlugin({
-    //             uglifyOptions: {
-    //                 output: {
-    //                     comments: false
-    //                 },
-    //                 compress: {
-    //                     warnings: false,
-    //                     drop_debugger: true,
-    //                     drop_console: true
-    //                 }
-    //             }
-    //         })
-    //     ],
-    //     splitChunks: {
-    //         chunks: "all",
-    //     }
-    // }
+    optimization:{
+        minimize: true,
+        minimizer: [new TerserPlugin()],
+        splitChunks: {
+            chunks: "all",
+        }
+    }
 }
