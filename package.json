@@ -6,6 +6,7 @@
   "scripts": {
     "start": "cross-env NODE_ENV=dev webpack-dev-server --inline --progress --colors",
     "build": "cross-env NODE_ENV=production webpack --config ./webpack.production.config.js --progress --colors",
+    "dll": "webpack --config webpack.vendor.config.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "dragonhyh123",

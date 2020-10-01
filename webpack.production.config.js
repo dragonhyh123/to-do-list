@@ -186,7 +186,11 @@ module.exports = {
         // })
 
         //Moment.js是一个日期时间处理相关的库，为了做本地化它会加载很多语言包，对于我们来说一般用不到其他地区的语言包，但它们会占很多体积，这时就可以用IgnorePlugin来去掉
-        new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/)
+        new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
+
+        // new webpack.DllReferencePlugin({
+        //     manifest: require(path.join(__dirname,'dll/manifest.json')),
+        // })
     ],
     optimization:{
         //压缩代码，移除多余的空格、换行及执行不到的代码，缩短变量名，在执行结果不变的前提下将代码替换为更短的形式
