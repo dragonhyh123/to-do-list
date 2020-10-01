@@ -6,7 +6,9 @@ import locale from 'antd/es/date-picker/locale/zh_CN';
 import * as moment from "moment";
 
 const Text = function(props){
-    return <div><span className="text">The current date is {props.date}</span></div>
+    debugger
+    return props.date ? <div><span className="text">当前日期 {props.date}</span></div> :
+        <div><span className="text">未选择</span></div>
 }
 
 export class helloWorld extends React.Component<any,any>{
@@ -16,8 +18,9 @@ export class helloWorld extends React.Component<any,any>{
         this.onSelectDate = this.onSelectDate.bind(this);
     }
 
-    onSelectDate(date: moment.MomentInput, dateString: string){
-        this.setState((state,prop)=>({date:dateString}));
+    onSelectDate(date: any, dateString: string){
+        debugger;
+        this.setState((state,prop)=>({date:date?date.format('YYYY年MM月DD日'):""}));
     }
 
     render() {

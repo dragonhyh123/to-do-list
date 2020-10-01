@@ -4,10 +4,11 @@ var HtmlWebpackPlugin = require('html-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var autoprefixer = require('autoprefixer');
 var OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+var UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 module.exports = {
     entry: {
-        app: path.resolve(__dirname, './src/js/index.js'),
+        app: path.resolve(__dirname, './src/index.tsx'),
         // 将 第三方依赖 单独打包
         vendor: ['react', 'react-dom']
     },
@@ -35,9 +36,11 @@ module.exports = {
         publicPath: './'
     },
 
+    mode:"production",
+
     resolve: {
         //自动扩展文件后缀名，意味着我们require模块可以省略不写后缀名
-        extensions: ['*', '.js', '.json', '.less','.jsx'],
+        extensions: ['*', '.js', '.json', '.less','.jsx','.ts','.tsx'],
         //模块别名定义，方便后续直接引用别名，无须多写长长的地址
         alias: {
             '@components': path.resolve(__dirname,'src/js/components')
@@ -69,6 +72,13 @@ module.exports = {
                     fallback: 'style-loader',
                     use: ['css-loader', 'postcss-loader']
                 })
+            },{
+                test: /\.scss$/,
+                // exclude: /node_modules/, 删掉次行  不然打包会报错  因为antd.css 在node_modules中
+                use: ExtractTextPlugin.extract({
+                    fallback: 'style-loader',
+                    use: ['css-loader', 'postcss-loader', "sass-loader"]
+                })
             }, {
                 test: /\.(png|gif|jpg|jpeg|bmp)$/i,
                 use: {
@@ -88,12 +98,17 @@ module.exports = {
                         outputPath: 'font/'
                     }
                 }
+            },
+            {
+                test:/\.tsx?$/,
+                use:['ts-loader'],
+                exclude: /node_modules/
             }
         ]
     },
     plugins: [
         // webpack 内置的 banner-plugin
-        new webpack.BannerPlugin("Copyright by 765745342@qq.com"),
+        new webpack.BannerPlugin("Copyright by 617962636@qq.com"),
 
         // html 模板插件
         new HtmlWebpackPlugin({
@@ -110,18 +125,20 @@ module.exports = {
         // 为组件分配ID，通过这个插件webpack可以分析和优先考虑使用最多的模块，并为它们分配最小的ID
         new webpack.optimize.OccurrenceOrderPlugin(),
 
-        new webpack.optimize.UglifyJsPlugin({
-            compress: {
-                //supresses warnings, usually from module minification
-                warnings: false
-            }
-        }),
+        //报错的原因是webpack4已经升级不支持这种写法了,也就是说不在plugins里面进行操作。而是放在了optimization里面,写法不变
+        // new webpack.optimize.UglifyJsPlugin({
+        //     compress: {
+        //         //supresses warnings, usually from module minification
+        //         warnings: false
+        //     }
+        // }),
 
         // 分离CSS和JS文件
         new ExtractTextPlugin('css/[name].[chunkhash:8].css'),
 
         // 提供公共代码
-        new webpack.optimize.CommonsChunkPlugin({name: 'vendor', filename: 'js/[name].[chunkhash:8].js'}),
+        // webpack4已经不再支持这种写法了，在optimization里面写
+        // new webpack.optimize.CommonsChunkPlugin({name: 'vendor', filename: 'js/[name].[chunkhash:8].js'}),
 
         // 可在业务 js 代码中使用 __DEV__ 判断是否是dev模式（dev模式下可以提示错误、测试报告等, production模式不提示）
         new webpack.DefinePlugin({
@@ -133,5 +150,24 @@ module.exports = {
             cssProcessorOptions: { discardComments: {removeAll: true } },
             canPrint: true
         })
-    ]
+    ],
+    // optimization:{
+    //     minimizer:[
+    //         new UglifyJsPlugin({
+    //             uglifyOptions: {
+    //                 output: {
+    //                     comments: false
+    //                 },
+    //                 compress: {
+    //                     warnings: false,
+    //                     drop_debugger: true,
+    //                     drop_console: true
+    //                 }
+    //             }
+    //         })
+    //     ],
+    //     splitChunks: {
+    //         chunks: "all",
+    //     }
+    // }
 }
