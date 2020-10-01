@@ -27,6 +27,7 @@ module.exports = {
             '@components': path.resolve(__dirname,'src/js/components')
         }
     },
+    devtool: 'source-map',
     module : {
         // 这里就是Loader，通过Loader，webpack能够针对每一种特定的资源做出相应的处理
         // 1.test参数用来指示当前配置项针对哪些资源，该值应是一个条件值(condition)。
@@ -80,11 +81,20 @@ module.exports = {
             {
                 test:/\.scss$/,
                 use:[{
-                    loader: "style-loader"      // 将 JS 字符串生成为 style 节点
+                    loader: "style-loader",      // 将 JS 字符串生成为 style 节点
+                    options:{
+                        sourceMap:true,
+                    }
                 },{
-                    loader: "css-loader"        // 将 CSS 转化成 CommonJS 模块
+                    loader: "css-loader",        // 将 CSS 转化成 CommonJS 模块
+                    options: {
+                        sourceMap:true,
+                    }
                 },{
-                    loader: "sass-loader"       // 将 Sass 编译成 CSS
+                    loader: "sass-loader",       // 将 Sass 编译成 CSS
+                    options:{
+                        sourceMap:true,
+                    }
                 }]
             }
         ]
