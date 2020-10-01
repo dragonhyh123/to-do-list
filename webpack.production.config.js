@@ -6,6 +6,8 @@ var autoprefixer = require('autoprefixer');
 var OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 // var UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
+const Analyzer = require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
+const Happypack = require("happypack");
 
 module.exports = {
     entry: {
@@ -52,13 +54,18 @@ module.exports = {
         rules: [
             {
                 test: /\.(js|jsx)$/,
-                exclude: /node_modules/,
+                exclude: /node_modules/,        //为了提高打包速度，一定要把node_modules排除
                 use: {
                     loader: "babel-loader",
                     options: {
                         presets: ['es2015', 'react']
                     }
                 }
+
+                //用Happypack提高打包速度
+                // test: /\.(js|jsx)$/,
+                // exclude: /node_modules/,
+                // loader: 'happypack/loader?id=js',
             }, {
                 test: /\.less$/,
                 exclude: /node_modules/,
@@ -101,9 +108,14 @@ module.exports = {
                 }
             },
             {
-                test:/\.tsx?$/,
+                test:/\.(ts|tsx)$/,
                 use:['ts-loader'],
                 exclude: /node_modules/
+
+                //用Happypack提高打包速度
+                // test:/\.(ts|tsx)$/,
+                // exclude: /node_modules/,
+                // loader:'happypack/loader?id=ts',
             }
         ]
     },
@@ -152,7 +164,29 @@ module.exports = {
             cssProcessor: require('cssnano'),
             cssProcessorOptions: { discardComments: {removeAll: true } },
             canPrint: true
-        })
+        }),
+
+        //帮助我们分析一个bundle的构成,它可以帮我们生成一张bundle的模块组成结构图，每个模块所占的体积一目了然
+        // new Analyzer(),
+
+        // new Happypack({
+        //     id:'js',
+        //     loaders:[{
+        //         loader:'babel-loader',
+        //         options:{presets: ['es2015', 'react']},
+        //     }]
+        // }),
+        //
+        // new Happypack({
+        //     id:'ts',
+        //     loaders:[{
+        //         loader:'ts-loader',
+        //         options:{},
+        //     }]
+        // })
+
+        //Moment.js是一个日期时间处理相关的库，为了做本地化它会加载很多语言包，对于我们来说一般用不到其他地区的语言包，但它们会占很多体积，这时就可以用IgnorePlugin来去掉
+        new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/)
     ],
     optimization:{
         //压缩代码，移除多余的空格、换行及执行不到的代码，缩短变量名，在执行结果不变的前提下将代码替换为更短的形式
