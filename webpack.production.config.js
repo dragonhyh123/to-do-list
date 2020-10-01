@@ -11,7 +11,7 @@ module.exports = {
     entry: {
         app: path.resolve(__dirname, './src/index.tsx'),
         // 将 第三方依赖 单独打包
-        vendor: ['react', 'react-dom']
+        vendor: ['react', 'react-dom','moment','antd']
     },
     output: {
         path: __dirname + "/dist",
