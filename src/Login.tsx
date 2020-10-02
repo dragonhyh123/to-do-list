@@ -20,11 +20,11 @@ export class Login extends React.Component<propsType,stateType>{
             userName:"",
             passWord:"",
         }
-        this.getetUserName = this.getetUserName.bind(this);
+        this.getUserName = this.getUserName.bind(this);
         this.getPassWord = this.getPassWord.bind(this);
     }
 
-    getetUserName(e:Event):void{
+    getUserName(e:Event):void{
         // this.setState((state,props)=>({userName:e.target.value}));
         this.setState({userName:e.target.value});
     }
@@ -39,7 +39,7 @@ export class Login extends React.Component<propsType,stateType>{
         <Space direction="vertical">
             <Space direction="horizontal" size="small">
                 <div className="loginText">用户名:</div>
-                <Input onChange={this.getetUserName}/>
+                <Input onChange={this.getUserName}/>
             </Space>
             <Space direction="horizontal" size="small">
                 <div className="loginText">密 码:</div>

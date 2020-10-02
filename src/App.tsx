@@ -1,6 +1,6 @@
 import * as React from 'react';
 import '../style/App.scss';
-// import {BrowserRouter as Router, Route, Link} from 'react-router-dom';
+import {BrowserRouter as Router, Route, Link} from 'react-router-dom';
 import {Login} from './Login';
 
 /**
