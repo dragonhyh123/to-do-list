@@ -1,3 +1,25 @@
-.loginText{
-  width:50px;
+#loginInformation{
+  padding-top: 300px;
+  width:260px;
+  margin: auto;
+  .loginLine{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 10px;
+    div{
+      width:50px;
+      white-space: pre;
+    }
+    .loginInput{
+      width:200px;
+    }
+  }
+  .loginButton{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    Button{
+    }
+  }
 }
