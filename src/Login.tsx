@@ -2,7 +2,6 @@ import * as React from "react";
 import { Input, Space } from 'antd';
 import 'antd/dist/antd.css';
 import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
-import locale from 'antd/es/date-picker/locale/zh_CN';
 import '../style/App.scss';
 
 interface propsType{}
