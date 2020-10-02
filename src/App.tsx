@@ -11,6 +11,7 @@ const Text = function(props){
         <div><span className="text">未选择</span></div>
 }
 
+//React.Component<any,any>第一个参数是props的type，第二个参数是state的参数
 export class helloWorld extends React.Component<any,any>{
     constructor(pros) {
         super(pros);
