@@ -2,6 +2,7 @@ const path=require('path');
 const webpack = require('webpack')
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var OpenBrowserPlugin = require('open-browser-webpack-plugin');
+const DashboardPlugin = require('webpack-dashboard/plugin');
 
 // 配置文件的内容需要通过module.exports暴露
 module.exports = {
@@ -117,6 +118,8 @@ module.exports = {
         new webpack.DefinePlugin({
             __DEV__: JSON.stringify(JSON.parse((process.env.NODE_ENV == 'dev') || 'false'))
         }),
+
+        new DashboardPlugin(),
     ],
     //我们在这里对webpack-dev-server进行配置
     devServer: {
