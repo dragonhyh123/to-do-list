@@ -3,12 +3,14 @@ import { Input, Button } from 'antd';
 import 'antd/dist/antd.css';
 import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 import '../style/App.scss';
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 
 interface propsType{}
 
 interface stateType{
     userName:string,
-    passWord:string
+    passWord:string,
+    nextPage:string,
 }
 
 type Event = React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>;
@@ -19,6 +21,7 @@ export class Login extends React.Component<propsType,stateType>{
         this.state={
             userName:"",
             passWord:"",
+            nextPage:"",
         }
         this.getUserName = this.getUserName.bind(this);
         this.getPassWord = this.getPassWord.bind(this);

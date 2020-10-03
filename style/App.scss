@@ -1,21 +1,21 @@
-#loginInformation{
+#loginInformation {
   padding-top: 300px;
-  width:260px;
+  width: 260px;
   margin: auto;
-  .loginLine{
+  .loginLine {
     display: flex;
     justify-content: center;
     align-items: center;
     padding-bottom: 10px;
-    div{
-      width:50px;
+    div {
+      width: 50px;
       white-space: pre;
     }
-    .loginInput{
-      width:200px;
+    .loginInput {
+      width: 200px;
     }
   }
-  .loginButton{
+  .loginButton {
     display: flex;
     justify-content: space-around;
     align-items: center;
