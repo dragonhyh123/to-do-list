@@ -5,7 +5,7 @@ import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 import '../style/App.scss';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import {connect} from "react-redux";
-import * as PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 
 interface propsType{}
 
@@ -80,4 +80,4 @@ export class Login extends React.Component<propsType,stateType>{
 
 const LoginComponent = connect(mapStateToProps, mapDispatchToProps)(Login);
 // @ts-ignore
-Login.contextType = {store:React.PropTypes.object};
+Login.contextType = {store:PropTypes.object};
