@@ -56,8 +56,6 @@ export class Login extends React.Component<propsType,stateType>{
     }
 
     render(){
-        const {store} = this.context;
-        debugger;
         return(
             <div id="loginInformation">
                 <div className="loginLine">
@@ -79,4 +77,4 @@ export class Login extends React.Component<propsType,stateType>{
 }
 
 const LoginComponent = connect(mapStateToProps, mapDispatchToProps)(Login);
-Login.contextType = {Provider: undefined, Consumer: undefined};
+Login.contextType = {store:React.PropTypes};
