@@ -22,16 +22,22 @@ export class Login extends React.Component<propsType,stateType>{
         }
         this.getUserName = this.getUserName.bind(this);
         this.getPassWord = this.getPassWord.bind(this);
+        this.onClickLogin = this.onClickLogin.bind(this);
+        this.onClickCancel = this.onClickCancel.bind(this);
     }
 
     getUserName(e:Event):void{
-        // this.setState((state,props)=>({userName:e.target.value}));
         this.setState({userName:e.target.value});
     }
 
     getPassWord(e:Event):void{
-        // this.setState((state,props)=>({passWord:e.target.value}));
         this.setState({passWord:e.target.value});
+    }
+
+    onClickLogin(event:React.MouseEvent<HTMLElement, MouseEvent>):void{
+    }
+
+    onClickCancel(event:React.MouseEvent<HTMLElement, MouseEvent>):void{
     }
 
     render(){
@@ -47,8 +53,8 @@ export class Login extends React.Component<propsType,stateType>{
                                     iconRender={visible => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}/>
                 </div>
                 <div className="loginButton">
-                    <Button type="primary">登录</Button>
-                    <Button>取消</Button>
+                    <Button type="primary" onClick={this.onClickLogin}>登录</Button>
+                    <Button onClick={this.onClickCancel}>取消</Button>
                 </div>
             </div>
         );
