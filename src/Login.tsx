@@ -5,7 +5,7 @@ import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 import '../style/App.scss';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import {connect} from "react-redux";
-import PropTypes from 'prop-types';
+import * as PropTypes from 'prop-types';
 
 interface propsType{}
 
