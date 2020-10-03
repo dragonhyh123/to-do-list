@@ -3,6 +3,7 @@ import reducer from '../reducers';
 
 export function configureStore(initialState?:StoreEnhancer) {
     const store = createStore(reducer, initialState);
+
     if ((module as any).hot) {
         // Enable Webpack hot module replacement for reducers
         (module as any).hot.accept('../reducers', () => {

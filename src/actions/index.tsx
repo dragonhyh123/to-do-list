@@ -1,9 +1,9 @@
 'use strict';
 /*
- * @author Damonare 2016-12-10
- * @version 1.0.0
  * action 类型
  */
+export const SetUserName = 'Set_UerName';
+export const SetPassWord = 'Set_PassWord';
 export const Add_Todo = 'Add_Todo';
 export const Change_Todo_To_Doing = 'Change_Todo_To_Doing';
 export const Change_Doing_To_Done = 'Change_Doing_To_Done';
@@ -11,6 +11,8 @@ export const Change_Done_To_Doing = 'Change_Done_To_Doing';
 export const Change_Doing_To_Todo = 'Change_Doing_To_Todo';
 export const Search='Search';
 export const Delete_Todo='Delete_Todo';
+
+
 /*
  * action 创建函数
  * @method  addTodo添加新事项

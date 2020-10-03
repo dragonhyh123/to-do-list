@@ -9,7 +9,7 @@ interface titleBarProps{
 function TitleBar(props:titleBarProps){
     const[state,setState] = useState({name:"Visitor"});
 
-    if(props.name==="18521095264@163.com"){
+    if(props.name==="dragonhyh123"){
         setState({name:"Administrator"})
     }
 
