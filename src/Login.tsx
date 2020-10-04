@@ -46,7 +46,6 @@ class LoginComponent extends React.Component<propsType,stateType>{
         // this.state={
         //     userName:"",
         //     passWord:"",
-        //     nextPage:"",
         // }
         // this.getUserName = this.getUserName.bind(this);
         // this.getPassWord = this.getPassWord.bind(this);
