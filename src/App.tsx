@@ -22,7 +22,7 @@ const routes = [
     {
         path: "/",
         component: Login,
-        parts:{
+        routes:{
             path:"/",
             component:Board,
         }
@@ -50,10 +50,11 @@ class AppComponent extends React.Component<props, state> {
         return(
             <Router>
                 <Switch>
-                    {routes.map((route, i) => (
-                        <RouteWithSubRoutes key={i} {...route} />
-                    ))}
-                    {/*<Route path="/" component={Login}/>*/}
+                    {/*{routes.map((route, i) => (*/}
+                    {/*    <RouteWithSubRoutes key={i} {...route} />*/}
+                    {/*))}*/}
+                    <Route exact path="/" component={Login}/>
+                    <Route exact path="/board" component={Board}/>
                 </Switch>
             </Router>
         );

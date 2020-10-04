@@ -5,7 +5,7 @@ import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 import '../style/App.scss';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import {connect} from "react-redux";
-import {setUserName,setPassWord,clearInformation } from '../src/actions/index';
+import {setUserName,setPassWord} from '../src/actions/index';
 import {ChangeEventHandler} from "react";
 
 interface propsType{
@@ -32,11 +32,10 @@ const mapStateToProps = (state) => {
 
 // 如果mapDispatchToProps是一个对象，它的每个键名也是对应 UI 组件的同名参数，键值应该是一个函数，会被当作 Action creator,
 // 返回的 Action 会由 Redux 自动发出。举例来说，上面的mapDispatchToProps写成对象就是下面这样。
-const mapDispatchToProps = (dispatch:Function):{getUserName:Function,getPassWord:Function,clearInformation:Function} => {
+const mapDispatchToProps = (dispatch:Function):{getUserName:Function,getPassWord:Function} => {
     return{
         getUserName:(e:Event)=>{let value = e.target.value;dispatch(setUserName(e))},
         getPassWord:(e:Event)=>{let value = e.target.value;dispatch(setPassWord(e))},
-        clearInformation:()=>{dispatch(clearInformation())},
     }
 }
 
@@ -62,13 +61,9 @@ class LoginComponent extends React.Component<propsType,stateType>{
     // }
 
     onClickLogin(event:React.MouseEvent<HTMLElement, MouseEvent>):void{
-        const{userName,passWord} = this.props;
-        alert(userName);
     }
 
     onClickCancel(event:React.MouseEvent<HTMLElement, MouseEvent>):void{
-        const{clearInformation} = this.props;
-        clearInformation();
     }
 
     render(){

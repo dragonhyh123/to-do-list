@@ -6,5 +6,8 @@
     "@babel/preset-react"
   ],
   "comments": true,
-  "plugins": ["@babel/plugin-transform-runtime"]
+  "plugins": [
+              "@babel/plugin-transform-runtime",
+              "@babel/plugin-syntax-dynamic-import"
+              ]
 }
