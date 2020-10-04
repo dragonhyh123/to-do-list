@@ -1,12 +1,12 @@
-import {SetUserName, SetPassWord} from '../actions';
+import {Set_UserName, Set_PassWord} from '../actions';
 
-function login(state, action) {
+function login(state:{userName:string,passWord:string}={userName:"",passWord:""}, action:{type:string,value:string}) {
     switch (action.type) {
-        case SetUserName:
-            state.userName = action.state;
+        case Set_UserName:
+            state.userName = action.value;
             return state;
-        case SetPassWord:
-            state.passWord = action.password;
+        case Set_PassWord:
+            state.passWord = action.value;
             return state;
         default:
             return null;

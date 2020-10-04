@@ -1,9 +1,11 @@
+import * as React from 'react';
+
 'use strict';
 /*
  * action 类型
  */
-export const SetUserName = 'Set_UerName';
-export const SetPassWord = 'Set_PassWord';
+export const Set_UserName = 'Set_UerName';
+export const Set_PassWord = 'Set_PassWord';
 export const Add_Todo = 'Add_Todo';
 export const Change_Todo_To_Doing = 'Change_Todo_To_Doing';
 export const Change_Doing_To_Done = 'Change_Doing_To_Done';
@@ -12,12 +14,26 @@ export const Change_Doing_To_Todo = 'Change_Doing_To_Todo';
 export const Search='Search';
 export const Delete_Todo='Delete_Todo';
 
-
+type Event = React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>;
 /*
  * action 创建函数
  * @method  addTodo添加新事项
  * @param  {String} text 添加事项的内容
  */
+export function setUserName(e:Event){
+    return {
+        type:Set_UserName,
+        value:e.target.value,
+    }
+}
+
+export function setPassWord(e:Event){
+    return {
+        type:Set_PassWord,
+        value:e.target.value,
+    }
+}
+
 export function addTodo(text) {
     return {
         type: Add_Todo,
