@@ -5,10 +5,8 @@ import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 import '../style/App.scss';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import {connect} from "react-redux";
-import * as PropTypes from 'prop-types';
 import {setUserName,setPassWord,clearInformation } from '../src/actions/index';
 import {ChangeEventHandler} from "react";
-import {Store} from 'redux';
 
 interface propsType{
     getUserName:ChangeEventHandler,
@@ -19,8 +17,6 @@ interface propsType{
 }
 
 interface stateType{
-    // userName:string,
-    // passWord:string,
 }
 
 type Event = React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>;
@@ -29,8 +25,8 @@ type Event = React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>;
 // （在例子中是LoginComponent组件）的props属性上，因此后续LoginComponent组件可以通过props.userName直接获取到容器组件的state.userName
 const mapStateToProps = (state) => {
     return {
-        userName:state.userName,
-        passWord:state.passWord,
+        userName:state.login.userName,
+        passWord:state.login.passWord,
     }
 }
 
@@ -66,10 +62,6 @@ class LoginComponent extends React.Component<propsType,stateType>{
     // }
 
     onClickLogin(event:React.MouseEvent<HTMLElement, MouseEvent>):void{
-        // if(this.context.hasOwnProperty("store")){
-        //     let {store} = this.context;
-        //     store.getState();
-        // }
         const{userName,passWord} = this.props;
         alert(userName);
     }
@@ -80,7 +72,7 @@ class LoginComponent extends React.Component<propsType,stateType>{
     }
 
     render(){
-        const {getUserName,getPassWord,userName,passWord} = this.props;
+        const {getUserName,getPassWord,userName} = this.props;
         debugger;
         const {store} = this.context;
         return(
