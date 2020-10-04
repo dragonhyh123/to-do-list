@@ -3,7 +3,7 @@ import { Input, Button } from 'antd';
 import 'antd/dist/antd.css';
 import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 import '../style/App.scss';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Link, RouteComponentProps } from 'react-router-dom';
 import {connect} from "react-redux";
 import {setUserName,setPassWord} from '../src/actions/index';
 import {ChangeEventHandler} from "react";
@@ -14,6 +14,7 @@ interface propsType{
     getPassWord:ChangeEventHandler,
     userName:string,
     passWord:string,
+    history:any;
 }
 
 interface stateType{
@@ -62,7 +63,7 @@ class LoginComponent extends React.Component<propsType,stateType>{
 
     onClickLogin(event:React.MouseEvent<HTMLElement, MouseEvent>):void{
         const path = '/Board';
-        browserHistory.push(path)
+        this.props.history.push(path);
     }
 
     onClickCancel(event:React.MouseEvent<HTMLElement, MouseEvent>):void{
