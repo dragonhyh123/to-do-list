@@ -6,6 +6,7 @@ import * as React from 'react';
  */
 export const Set_UserName = 'Set_UerName';
 export const Set_PassWord = 'Set_PassWord';
+export const Clear_Information = 'Clear_Information';
 export const Add_Todo = 'Add_Todo';
 export const Change_Todo_To_Doing = 'Change_Todo_To_Doing';
 export const Change_Doing_To_Done = 'Change_Doing_To_Done';
@@ -31,6 +32,12 @@ export function setPassWord(e:Event){
     return {
         type:Set_PassWord,
         value:e.target.value,
+    }
+}
+
+export function clearInformation(){
+    return{
+        type:Clear_Information,
     }
 }
 
