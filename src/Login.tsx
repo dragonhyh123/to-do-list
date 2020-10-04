@@ -14,6 +14,8 @@ interface propsType{
     getUserName:ChangeEventHandler,
     getPassWord:ChangeEventHandler,
     clearInformation:Function,
+    userName:string,
+    passWord:string,
 }
 
 interface stateType{
@@ -23,6 +25,8 @@ interface stateType{
 
 type Event = React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>;
 
+//mapStateToProps函数：参数是容器组件的state对象，用于将容器组件（在例子中是Container）的state对象值映射到对应显示组件
+// （在例子中是LoginComponent组件）的props属性上，因此后续LoginComponent组件可以通过props.userName直接获取到容器组件的state.userName
 const mapStateToProps = (state) => {
     return {
         userName:state.userName,
@@ -66,6 +70,8 @@ class LoginComponent extends React.Component<propsType,stateType>{
         //     let {store} = this.context;
         //     store.getState();
         // }
+        const{userName,passWord} = this.props;
+        alert(userName);
     }
 
     onClickCancel(event:React.MouseEvent<HTMLElement, MouseEvent>):void{
@@ -74,7 +80,9 @@ class LoginComponent extends React.Component<propsType,stateType>{
     }
 
     render(){
-        const {getUserName,getPassWord} = this.props;
+        const {getUserName,getPassWord,userName,passWord} = this.props;
+        debugger;
+        const {store} = this.context;
         return(
             <div id="loginInformation">
                 <div className="loginLine">
@@ -94,5 +102,7 @@ class LoginComponent extends React.Component<propsType,stateType>{
         );
     }
 }
+
+// LoginComponent.contextType = {}
 
 export const Login = connect(mapStateToProps, mapDispatchToProps)(LoginComponent);
