@@ -15,8 +15,8 @@ import {Board} from './Board';
  * 用于替换 store 中原有的 reducer ，以此可以改变 store 中原有的状态的数据结构
  */
 
-interface props{};
-interface state{};
+interface props{}
+interface state{}
 
 const routes = [
     {
