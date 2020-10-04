@@ -7,11 +7,11 @@ import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import {connect} from "react-redux";
 import {setUserName,setPassWord} from '../src/actions/index';
 import {ChangeEventHandler} from "react";
+import {browserHistory} from 'react-router';
 
 interface propsType{
     getUserName:ChangeEventHandler,
     getPassWord:ChangeEventHandler,
-    clearInformation:Function,
     userName:string,
     passWord:string,
 }
@@ -61,6 +61,8 @@ class LoginComponent extends React.Component<propsType,stateType>{
     // }
 
     onClickLogin(event:React.MouseEvent<HTMLElement, MouseEvent>):void{
+        const path = '/Board';
+        browserHistory.push(path)
     }
 
     onClickCancel(event:React.MouseEvent<HTMLElement, MouseEvent>):void{
