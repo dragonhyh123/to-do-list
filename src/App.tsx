@@ -1,9 +1,9 @@
 import * as React from 'react';
 import '../style/App.scss';
-import {BrowserRouter as Router, Route, Link, Switch} from 'react-router-dom';
+import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import {Login} from './Login';
-import {connect, Provider} from "react-redux";
-// import {configureStore} from "./store";
+import {connect} from "react-redux";
+import {Board} from './Board';
 
 /**
  * React.Component<any,any>第一个参数是props的type，第二个参数是state的参数
@@ -15,23 +15,19 @@ import {connect, Provider} from "react-redux";
  * 用于替换 store 中原有的 reducer ，以此可以改变 store 中原有的状态的数据结构
  */
 
-interface props{}
-interface state{}
+interface props{};
+interface state{};
 
 const routes = [
     {
         path: "/",
-        component: Login
+        component: Login,
+        parts:{
+            path:"/",
+            component:Board,
+        }
     },
 ];
-
-// const mapStateToProps = (state) => {
-//     return {
-//     }
-// };
-//
-// const mapDispatchToProps = {
-// };
 
 function RouteWithSubRoutes(route:any) {
     return (

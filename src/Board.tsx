@@ -6,7 +6,7 @@ interface titleBarProps{
     name:string;
 }
 
-function TitleBar(props:titleBarProps){
+function TitleBar(props?:titleBarProps){
     const[state,setState] = useState({name:"Visitor"});
 
     if(props.name==="dragonhyh123"){
@@ -18,4 +18,14 @@ function TitleBar(props:titleBarProps){
             Hello {this.state.name}
         </div>
     );
+}
+
+export class Board extends React.Component<any, any>{
+    constructor(props) {
+        super(props);
+    }
+
+    render() {
+        return(<TitleBar name={""}/>);
+    }
 }
