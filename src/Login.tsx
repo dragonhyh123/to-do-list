@@ -1,4 +1,5 @@
-import * as React from "react";
+// import * as React from "react";
+import React = require('react');
 import { Input, Button } from 'antd';
 import 'antd/dist/antd.css';
 import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
