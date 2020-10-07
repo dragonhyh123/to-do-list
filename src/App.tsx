@@ -54,8 +54,8 @@ class AppComponent extends React.Component<props, state> {
                     {/*    <RouteWithSubRoutes key={i} {...route} />*/}
                     {/*))}*/}
                     <Route exact path="/" component={Login}/>
-                    <Route exact path="/board:text" component={Board}/>
-                    <Redirect from="/*" to="/" />           {/*必须放在switch的最后一行，意思是当前面的页面都找不到的时候，跳转到redirect页面 */}
+                    <Route exact path="/board/:text" component={Board}/>
+                    <Redirect from="/*" to="/" />           {/*必须放在switch的最后一行，意思是当前面的页面都找不到的时候，跳转到redirect页面*/}
                 </Switch>
             </Router>
         );

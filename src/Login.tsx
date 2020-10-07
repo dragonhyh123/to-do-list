@@ -63,7 +63,7 @@ class LoginComponent extends React.Component<propsType,stateType>{
     // }
 
     onClickLogin(event:React.MouseEvent<HTMLElement, MouseEvent>):void{
-        const path = '/Board Hello World';
+        const path = '/Board/Hello World';
         this.props.history.block("test");
         this.props.history.push(path);
     }
