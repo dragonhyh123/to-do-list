@@ -54,7 +54,7 @@ class AppComponent extends React.Component<props, state> {
                     {/*    <RouteWithSubRoutes key={i} {...route} />*/}
                     {/*))}*/}
                     <Route exact path="/" component={Login}/>
-                    <Route exact path="/board" component={Board}/>
+                    <Route exact path="/board:text" component={Board}/>
                 </Switch>
             </Router>
         );

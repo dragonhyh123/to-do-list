@@ -28,7 +28,7 @@ export class Board extends React.Component<any, any>{
     render() {
         // return(<TitleBar name={"dragonhyh123"}/>);
         return <div>
-            <h1>Hello World</h1>
+            <h1>{this.props.match.params.text}</h1>
         </div>;
     }
 }
