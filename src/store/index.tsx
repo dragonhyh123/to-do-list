@@ -1,4 +1,4 @@
-import {Action, createStore, Reducer, Store, StoreEnhancer} from 'redux';
+import {Action, createStore, Reducer, Store, StoreEnhancer, applyMiddleware} from 'redux';
 import reducer from '../reducers';
 
 export function configureStore(initialState?:StoreEnhancer) {

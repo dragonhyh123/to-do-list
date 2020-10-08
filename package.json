@@ -60,6 +60,7 @@
     "react-hot-loader": "^4.13.0",
     "react-router": "^5.2.0",
     "react-router-config": "^5.1.1",
+    "redux-thunk": "^2.3.0",
     "sass-loader": "^10.0.2",
     "stylelint": "^13.7.2",
     "stylelint-config-standard": "^20.0.0",
