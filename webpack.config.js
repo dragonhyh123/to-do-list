@@ -22,7 +22,7 @@ module.exports = {
     },
     resolve: {
         //自动扩展文件后缀名，意味着我们require模块可以省略不写后缀名
-        extensions: ['*', '.js', '.json', '.less','.jsx','.tsx','ts'],
+        extensions: ['*', '.js', '.json', '.less','.jsx','.tsx','.ts', '.scss'],
         //模块别名定义，方便后续直接引用别名，无须多写长长的地址
         alias: {
             '@components': path.resolve(__dirname,'src/js/components')
