@@ -1,13 +1,16 @@
 var path = require('path')
 var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
+// var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var autoprefixer = require('autoprefixer');
 var OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 // var UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const Analyzer = require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
 const Happypack = require("happypack");
+const AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin');
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+// const HtmlWebpackPlugin = require('html-webpack-tags-plugin');
 
 module.exports = {
     entry: {
@@ -69,24 +72,27 @@ module.exports = {
             }, {
                 test: /\.less$/,
                 exclude: /node_modules/,
-                use: ExtractTextPlugin.extract({
-                    fallback: 'style-loader',
-                    use: ['css-loader', 'postcss-loader', 'less-loader']
-                })
+                // use: ExtractTextPlugin.extract({
+                //     fallback: 'style-loader',
+                //     use: ['css-loader', 'postcss-loader', 'less-loader']
+                // })
+                use: [ MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader', 'less-loader']
             }, {
                 test: /\.css$/,
                 // exclude: /node_modules/, 删掉次行  不然打包会报错  因为antd.css 在node_modules中
-                use: ExtractTextPlugin.extract({
-                    fallback: 'style-loader',
-                    use: ['css-loader', 'postcss-loader']
-                })
+                // use: ExtractTextPlugin.extract({
+                //     fallback: 'style-loader',
+                //     use: ['css-loader', 'postcss-loader']
+                // })
+                use: [ MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader']
             },{
                 test: /\.scss$/,
                 // exclude: /node_modules/, 删掉次行  不然打包会报错  因为antd.css 在node_modules中
-                use: ExtractTextPlugin.extract({
-                    fallback: 'style-loader',
-                    use: ['css-loader', 'postcss-loader', "sass-loader"]
-                })
+                // use: ExtractTextPlugin.extract({
+                //     fallback: 'style-loader',
+                //     use: ['css-loader', 'postcss-loader', "sass-loader"]
+                // })
+                use: [ MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader', 'sass-loader']
             }, {
                 test: /\.(png|gif|jpg|jpeg|bmp)$/i,
                 use: {
@@ -146,8 +152,11 @@ module.exports = {
         //     }
         // }),
 
-        // 分离CSS和JS文件
-        new ExtractTextPlugin('css/[name].[chunkhash:8].css'),
+        // 分离CSS和JS文件,由于webpack v4的extract-text-webpack-plugin不应该用于css,改为使用mini-css-extract-plugin
+        // new ExtractTextPlugin('css/[name].[chunkhash:8].css'),
+        new MiniCssExtractPlugin({
+            filename: 'css/[name].[chunkhash:8].css',
+        }),
 
         // 提供公共代码
         // webpack4已经不再支持这种写法了，在optimization里面写
@@ -189,8 +198,15 @@ module.exports = {
         new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
 
         new webpack.DllReferencePlugin({
+            // context: path.resolve(__dirname, '..'),
             manifest: require(path.join(__dirname,'dist/dll/manifest.json')),
-        })
+        }),
+
+        //这个主要是将生成的vendor.dll.js文件加上hash值插入到页面中。
+        //当我们想在跟页面打包后，插入我们特定script的引用，来达到全局变量的效果
+        new AddAssetHtmlPlugin(
+            { filepath: path.join(__dirname,'dist/dll/main.dll.js') }
+        )
     ],
     optimization:{
         //压缩代码，移除多余的空格、换行及执行不到的代码，缩短变量名，在执行结果不变的前提下将代码替换为更短的形式
