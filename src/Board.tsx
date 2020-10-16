@@ -1,9 +1,6 @@
 import * as React from 'react';
-<<<<<<< HEAD
 import {Button} from 'antd';
-=======
 import * as Lodash from 'lodash';
->>>>>>> c8a2fbbdd4452849497903d7f07877247e6c010e
 
 const useState = React.useState;
 
