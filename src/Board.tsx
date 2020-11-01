@@ -1,25 +1,54 @@
 import * as React from 'react';
-import {Button} from 'antd';
-import * as Lodash from 'lodash';
+import { Button, Menu } from 'antd';
+import { MailOutlined, AppstoreOutlined, SettingOutlined } from '@ant-design/icons';
+import '../style/App.scss';
 
 const useState = React.useState;
+const { SubMenu } = Menu;
 
-interface titleBarProps{
-    name:string;
-}
+//webpack创建了一个全局变量process.env.NODE_ENV,用来区分不同的状态，同时可以在程序中区分程序状态
+// if(process.env.NODE_ENV==='development'){
+//     console.log("this is development")
+// }else if(process.env.NODE_ENV==='production'){
+//     console.log("this is production")
+// }
 
-function TitleBar(props?:titleBarProps){
-    const[state,setState] = useState({name:"Visitor"});
-
-    if(props.name==="dragonhyh123"){
-        setState({name:"Administrator"})
-    }
-
+function Title(props:any){
     return(
         <div>
-            Hello {this.state.name}
+            <h1 className="boardTitle">{`Welcome ${props.text}`}</h1>
         </div>
     );
+}
+
+function TitleBar(props: any) {
+    const [state, setState] = useState({ current: 'mail' });
+    const { current } = state;
+
+    function handleClick(event:any) {
+        console.log('click ', event);
+        setState({ current: event.key });
+    }
+
+    return (
+        <Menu onClick={handleClick} selectedKeys={[current]} mode="horizontal">
+            <Menu.Item key="mail" icon={<MailOutlined />}>
+                OverView
+            </Menu.Item>
+            <Menu.Item key="app" icon={<AppstoreOutlined />}>
+                Plan Detail
+            </Menu.Item>
+            <SubMenu key="SubMenu" icon={<SettingOutlined />} title="Navigation Three - Submenu">
+                <Menu.ItemGroup title="Item 1">
+                    <Menu.Item key="setting:1">Option 1</Menu.Item>
+                    <Menu.Item key="setting:2">Option 2</Menu.Item>
+                </Menu.ItemGroup>
+                <Menu.ItemGroup title="Item 2">
+                    <Menu.Item key="setting:3">Option 3</Menu.Item>
+                    <Menu.Item key="setting:4">Option 4</Menu.Item>
+                </Menu.ItemGroup>
+            </SubMenu>
+        </Menu>);
 }
 
 export class Board extends React.Component<any, any>{
@@ -28,22 +57,15 @@ export class Board extends React.Component<any, any>{
         this.onClick = this.onClick.bind(this);
     }
 
-    onClick(event){
+    onClick(event) {
         this.props.history.goBack();
     }
 
     render() {
-        // return(<TitleBar name={"dragonhyh123"}/>);
-
-        //webpack创建了一个全局变量process.env.NODE_ENV,用来区分不同的状态，同时可以在程序中区分程序状态
-        // if(process.env.NODE_ENV==='development'){
-        //     console.log("this is development")
-        // }else if(process.env.NODE_ENV==='production'){
-        //     console.log("this is production")
-        // }
-        return <div>
-                 <h1>{`Welcome ${this.props.match.params.text}`}</h1>
-                 <Button onClick={this.onClick}>test</Button>
-               </div>;
+        return (
+        <div>
+            <Title text={this.props.match.params.text}/>
+            <TitleBar/>
+        </div>);
     }
 }
