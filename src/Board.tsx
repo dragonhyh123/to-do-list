@@ -13,19 +13,32 @@ const { SubMenu } = Menu;
 //     console.log("this is production")
 // }
 
-function Title(props:any){
-    return(
+interface titleProps{
+    text:string;
+}
+
+interface titleBarProps{
+}
+
+interface boardProps{
+}
+
+interface boardState{
+}
+
+function Title(props: titleProps) {
+    return (
         <div>
             <h1 className="boardTitle">{`Welcome ${props.text}`}</h1>
         </div>
     );
 }
 
-function TitleBar(props: any) {
+function TitleBar(props: titleBarProps) {
     const [state, setState] = useState({ current: 'mail' });
     const { current } = state;
 
-    function handleClick(event:any) {
+    function handleClick(event: any) {
         console.log('click ', event);
         setState({ current: event.key });
     }
@@ -63,9 +76,9 @@ export class Board extends React.Component<any, any>{
 
     render() {
         return (
-        <div>
-            <Title text={this.props.match.params.text}/>
-            <TitleBar/>
-        </div>);
+            <div>
+                <Title text={this.props.match.params.text} />
+                <TitleBar />
+            </div>);
     }
 }

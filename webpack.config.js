@@ -111,7 +111,7 @@ module.exports = {
 
         // 打开浏览器
         new OpenBrowserPlugin({
-            url: 'http://localhost:8090'
+            url: 'http://localhost:8083'
         }),
 
         // 可在业务 js 代码中使用 __DEV__ 判断是否是dev模式（dev模式下可以提示错误、测试报告等, production模式不提示）
@@ -128,7 +128,7 @@ module.exports = {
         inline:true,//用来支持dev-server自动刷新的配置，webpack有两种模式支持自动刷新，一种是iframe模式，一种是inline模式；使用iframe模式是不需要在devServer进行配置的，
         // 只需使用特定的URL格式访问即可；不过我们一般还是常用inline模式，在devServer中对inline设置为true后，当我们启动webpack-dev-server时仍要需要配置inline才能生效
         hot:true,// 启动webpack热模块替换特性,这里是个坑
-        port:8090,//配置服务端口号
+        port:8083,//配置服务端口号
         host:'localhost',//服务器的IP地址，可以使用IP也可以使用localhost
         compress:true,//服务端压缩是否开启
     }

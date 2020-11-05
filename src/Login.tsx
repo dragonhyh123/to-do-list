@@ -79,6 +79,7 @@ class LoginComponent extends React.Component<propsType, stateType>{
     onClickLogin(event: React.MouseEvent<HTMLElement, MouseEvent>): void {
         const path = `/Board/${this.props.userName}`;
         // this.props.history.block(this.props.userName);
+        debugger;
         this.props.history.push(path);
     }
 
