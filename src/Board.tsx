@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Button, Menu } from 'antd';
 import { MailOutlined, AppstoreOutlined, SettingOutlined } from '@ant-design/icons';
 import '../style/App.scss';
+import {match} from 'react-router-dom';
 
 const useState = React.useState;
 const { SubMenu } = Menu;
@@ -21,6 +22,7 @@ interface titleBarProps{
 }
 
 interface boardProps{
+    match: match<{text: string}>
 }
 
 interface boardState{

@@ -46,6 +46,7 @@ function LoginComponent1(props: propsType) {
         const path = `/Board/${props.userName}`;
         // this.props.history.block(this.props.userName);
         props.history.push(path);
+        debugger;
     }
 
     function onClickCancel(event: React.MouseEvent<HTMLElement, MouseEvent>): void {
@@ -79,7 +80,6 @@ class LoginComponent extends React.Component<propsType, stateType>{
     onClickLogin(event: React.MouseEvent<HTMLElement, MouseEvent>): void {
         const path = `/Board/${this.props.userName}`;
         // this.props.history.block(this.props.userName);
-        debugger;
         this.props.history.push(path);
     }
 
