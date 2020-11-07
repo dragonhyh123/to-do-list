@@ -6,13 +6,14 @@ import '../style/App.scss';
 import { connect } from "react-redux";
 import { setUserName, setPassWord } from '../src/actions/index';
 import { ChangeEventHandler } from "react";
+import {history} from 'react-router-dom';
 
 interface propsType {
     getUserName: ChangeEventHandler,
     getPassWord: ChangeEventHandler,
     userName: string,
     passWord: string,
-    history: any;
+    history: history;
 }
 
 interface stateType {
@@ -46,7 +47,6 @@ function LoginComponent1(props: propsType) {
         const path = `/Board/${props.userName}`;
         // this.props.history.block(this.props.userName);
         props.history.push(path);
-        debugger;
     }
 
     function onClickCancel(event: React.MouseEvent<HTMLElement, MouseEvent>): void {

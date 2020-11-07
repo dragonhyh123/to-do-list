@@ -2,7 +2,9 @@ import * as React from 'react';
 import { Button, Menu } from 'antd';
 import { MailOutlined, AppstoreOutlined, SettingOutlined } from '@ant-design/icons';
 import '../style/App.scss';
-import {match} from 'react-router-dom';
+import { match, history, location } from 'react-router-dom';
+import { MenuInfo } from '../node_modules/rc-menu/lib/interface';
+import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 
 const useState = React.useState;
 const { SubMenu } = Menu;
@@ -14,18 +16,25 @@ const { SubMenu } = Menu;
 //     console.log("this is production")
 // }
 
-interface titleProps{
-    text:string;
+interface titleProps {
+    text: string;
 }
 
-interface titleBarProps{
+interface titleBarProps {
+    location: location,
+    onClickChange: Function
 }
 
-interface boardProps{
-    match: match<{text: string}>
+interface OverViewChartsProps {
 }
 
-interface boardState{
+interface boardProps {
+    match: match<{ text: string }>,
+    history: history,
+    location: location,
+}
+
+interface boardState {
 }
 
 function Title(props: titleProps) {
@@ -40,9 +49,19 @@ function TitleBar(props: titleBarProps) {
     const [state, setState] = useState({ current: 'mail' });
     const { current } = state;
 
-    function handleClick(event: any) {
-        console.log('click ', event);
-        setState({ current: event.key });
+
+    function handleClick(event: MenuInfo) {
+        // console.log('click ', event);
+        setState({ current: event.key.toString() });
+        switch (event.key) {
+            case 'mail':
+                break;
+            case 'app':
+                props.onClickChange();
+                break;
+            default:
+                break;
+        }
     }
 
     return (
@@ -66,21 +85,36 @@ function TitleBar(props: titleBarProps) {
         </Menu>);
 }
 
-export class Board extends React.Component<any, any>{
+function OverViewCharts(props: OverViewChartsProps) {
+    return (
+        <h1>Hello World</h1>
+    );
+}
+
+export class Board extends React.Component<boardProps, boardState>{
     constructor(props) {
         super(props);
         this.onClick = this.onClick.bind(this);
+        this.onClickChange = this.onClickChange.bind(this);
     }
 
-    onClick(event) {
-        this.props.history.goBack();
+    onClick(event: Event) {
+        // this.props.history.goBack();
+        // const path = this.props.location + "/overview";
+        // this.props.history.push(path);
+    }
+
+    onClickChange() {
+        const path = this.props.location.pathname + "/overview";
+        this.props.history.push(path);
     }
 
     render() {
         return (
-            <div>
+            <Router>
                 <Title text={this.props.match.params.text} />
-                <TitleBar />
-            </div>);
+                <TitleBar location={this.props.location} onClickChange={this.onClickChange} />
+                <Route path={this.props.location.pathname + "/overview"} component={OverViewCharts}></Route>
+            </Router>)
     }
 }
