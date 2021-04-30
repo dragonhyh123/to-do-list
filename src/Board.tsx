@@ -65,7 +65,7 @@ function TitleBar(props: titleBarProps) {
     }
 
     return (
-        <Menu onClick={handleClick} selectedKeys={[current]} mode="horizontal">
+        <Menu onClick={handleClick} selectedKeys={[current]} mode="inline" style={{ width: 256 }}>
             <Menu.Item key="mail" icon={<MailOutlined />}>
                 OverView
             </Menu.Item>
