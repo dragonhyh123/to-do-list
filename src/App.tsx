@@ -62,4 +62,4 @@ class AppComponent extends React.Component<props, state> {
     }
 }
 
-export const App = connect()(AppComponent)
+export const App = connect()(AppComponent);
