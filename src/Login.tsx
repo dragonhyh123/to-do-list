@@ -7,6 +7,7 @@ import { connect } from "react-redux";
 import { setUserName, setPassWord } from '../src/actions/index';
 import { ChangeEventHandler } from "react";
 import {history} from 'react-router-dom';
+import axios from 'axios';
 
 interface propsType {
     getUserName: ChangeEventHandler,
@@ -45,7 +46,6 @@ function LoginComponent1(props: propsType) {
 
     function onClickLogin(event: React.MouseEvent<HTMLElement, MouseEvent>): void {
         const path = `/Board/${props.userName}`;
-        // this.props.history.block(this.props.userName);
         props.history.push(path);
     }
 
@@ -77,10 +77,14 @@ class LoginComponent extends React.Component<propsType, stateType>{
         this.onClickCancel = this.onClickCancel.bind(this);
     }
 
-    onClickLogin(event: React.MouseEvent<HTMLElement, MouseEvent>): void {
-        const path = `/Board/${this.props.userName}`;
-        // this.props.history.block(this.props.userName);
-        this.props.history.push(path);
+    async onClickLogin(event: React.MouseEvent<HTMLElement, MouseEvent>): Promise<void> {
+        let result:any = await axios.post('http://localhost:3000/login',{userName:this.props.userName, password:this.props.passWord});
+        if(result.status===200&&result.data.status==='success'){
+            const path = `/Board/${this.props.userName}`;
+            this.props.history.push(path);
+        }else{
+            alert(result.data.message);
+        }
     }
 
     onClickCancel(event: React.MouseEvent<HTMLElement, MouseEvent>): void {
@@ -108,4 +112,4 @@ class LoginComponent extends React.Component<propsType, stateType>{
     }
 }
 
-export const Login = connect(mapStateToProps, mapDispatchToProps)(LoginComponent1);
+export const Login = connect(mapStateToProps, mapDispatchToProps)(LoginComponent);
