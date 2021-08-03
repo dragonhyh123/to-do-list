@@ -4,7 +4,7 @@ import createSagaMiddleware from 'redux-saga';
 import {createLogger} from 'redux-logger';
 import reducer from '../reducers';
 
-interface initialState{login?:{userName:string,passWord:string}}
+interface initialState{login?:{userName:string,passWord:string,showRegister:boolean}}
 
 function * helloSaga() {
     console.log('Hello Sagas!');

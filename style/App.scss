@@ -1,28 +1,29 @@
-#loginInformation {
-  padding-top: 300px;
-  width: 260px;
-  margin: auto;
-  .loginLine {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding-bottom: 10px;
-    div {
-      width: 50px;
-      white-space: pre;
-    }
-    .loginInput {
-      width: 200px;
-    }
-  }
-  .loginButton {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-  }
+html,body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
 }
 
-.boardTitle{
-  display: block;
-  margin-left: 20px;
+.container{
+  width: 300px;
+  position: absolute;
+  top: 30%;
+  left:50%;
+  transform: translateY(-50%);
+  transform: translateX(-50%);
+}
+
+.login-form {
+  position: relative;
+  max-width: 300px;
+}
+.login-form-forgot {
+  float: right;
+}
+.ant-col-rtl .login-form-forgot {
+  float: left;
+}
+.login-form-button {
+  width: 100%;
 }

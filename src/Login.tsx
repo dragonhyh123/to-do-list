@@ -1,12 +1,12 @@
 import React = require('react');
-import { Input, Button } from 'antd';
+import { Input, Button, Form, Checkbox, Modal } from 'antd';
 import 'antd/dist/antd.css';
-import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
+import { EyeInvisibleOutlined, EyeTwoTone, UserOutlined, LockOutlined } from '@ant-design/icons';
 import '../style/App.scss';
 import { connect } from "react-redux";
-import { setUserName, setPassWord } from '../src/actions/index';
+import { setUserName, setPassWord, setRigister } from '../src/actions/index';
 import { ChangeEventHandler } from "react";
-import {history} from 'react-router-dom';
+import { history } from 'react-router-dom';
 import axios from 'axios';
 
 interface propsType {
@@ -14,7 +14,9 @@ interface propsType {
     getPassWord: ChangeEventHandler,
     userName: string,
     passWord: string,
-    history: history;
+    history: history,
+    showRegister: boolean,
+    setRegisterVisible: (boolean)=>void
 }
 
 interface stateType {
@@ -28,85 +30,76 @@ const mapStateToProps = (state) => {
     return {
         userName: state.login.userName,
         passWord: state.login.passWord,
+        showRegister: state.login.showRegister
     }
 }
 
 // 如果mapDispatchToProps是一个对象，它的每个键名也是对应 UI 组件的同名参数，键值应该是一个函数，会被当作 Action creator,
 // 返回的 Action 会由 Redux 自动发出。举例来说，上面的mapDispatchToProps写成对象就是下面这样。
-const mapDispatchToProps = (dispatch: Function): { getUserName: (Event)=>void, getPassWord: (Event)=>void } => {
+const mapDispatchToProps = (dispatch: Function): { getUserName: (Event) => void, getPassWord: (Event) => void, setRegisterVisible: (boolean)=>void} => {
     return {
-        getUserName: (e: Event) => { let value = e.target.value; dispatch(setUserName(e)) },
-        getPassWord: (e: Event) => { let value = e.target.value; dispatch(setPassWord(e)) },
+        getUserName: (e: Event) => { dispatch(setUserName(e)) },
+        getPassWord: (e: Event) => { dispatch(setPassWord(e)) },
+        setRegisterVisible: (visible:boolean) => { dispatch(setRigister(visible)) }
     }
-}
-
-//函数组件实现
-function LoginComponent1(props: propsType) {
-    const { getUserName, getPassWord, userName } = props;
-
-    function onClickLogin(event: React.MouseEvent<HTMLElement, MouseEvent>): void {
-        const path = `/Board/${props.userName}`;
-        props.history.push(path);
-    }
-
-    function onClickCancel(event: React.MouseEvent<HTMLElement, MouseEvent>): void {
-    }
-
-    return (<div id="loginInformation">
-        <div className="loginLine">
-            <div>用户名</div>
-            <Input onChange={getUserName} placeholder="请输入用户名" className="loginInput" />
-        </div>
-        <div className="loginLine">
-            <div>密   码</div>
-            <Input.Password onChange={getPassWord} placeholder="请输入密码" className="loginInput"
-                iconRender={visible => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)} />
-        </div>
-        <div className="loginButton">
-            <Button type="primary" onClick={onClickLogin}>登录</Button>
-            <Button onClick={onClickCancel}>取消</Button>
-        </div>
-    </div>)
 }
 
 //class组件实现
 class LoginComponent extends React.Component<propsType, stateType>{
     constructor(props) {
         super(props);
-        this.onClickLogin = this.onClickLogin.bind(this);
-        this.onClickCancel = this.onClickCancel.bind(this);
     }
 
     async onClickLogin(event: React.MouseEvent<HTMLElement, MouseEvent>): Promise<void> {
-        let result:any = await axios.post('http://localhost:3000/login',{userName:this.props.userName, password:this.props.passWord});
-        if(result.status===200&&result.data.status==='success'){
+        let result: any = await axios.post('http://localhost:3000/login', { userName: this.props.userName, password: this.props.passWord });
+        if (result.status === 200 && result.data.status === 'success') {
             const path = `/Board/${this.props.userName}`;
             this.props.history.push(path);
-        }else{
+        } else {
             alert(result.data.message);
         }
     }
 
-    onClickCancel(event: React.MouseEvent<HTMLElement, MouseEvent>): void {
-    }
-
     render() {
-        const { getUserName, getPassWord, userName } = this.props;
+        const { getUserName, getPassWord, setRegisterVisible } = this.props;
         return (
-            <div id="loginInformation">
-                <div className="loginLine">
-                    <div>用户名</div>
-                    <Input onChange={getUserName} placeholder="请输入用户名" className="loginInput" />
-                </div>
-                <div className="loginLine">
-                    <div>密   码</div>
-                    <Input.Password onChange={getPassWord} placeholder="请输入密码" className="loginInput"
-                        iconRender={visible => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)} />
-                </div>
-                <div className="loginButton">
-                    <Button type="primary" onClick={this.onClickLogin}>登录</Button>
-                    <Button onClick={this.onClickCancel}>取消</Button>
-                </div>
+            <div id="container" className="container">
+                <Form name="normal_login" className="login-form" initialValues={{ remember: true }}>
+                    <Form.Item name="username" rules={[{ required: true, message: 'Please input your Username!' }]}>
+                        <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Username" onChange={getUserName} />
+                    </Form.Item>
+
+                    <Form.Item name="password" rules={[{ required: true, message: 'Please input your Password!' }]}>
+                        <Input prefix={<LockOutlined className="site-form-item-icon" />} type="password" placeholder="Password" onChange={getPassWord} />
+                    </Form.Item>
+
+                    <Form.Item>
+                        <Form.Item name="remember" valuePropName="checked" noStyle>
+                            <Checkbox>Remember me</Checkbox>
+                        </Form.Item>
+                        <a className="login-form-forgot" href="">
+                            Forgot password
+                        </a>
+                    </Form.Item>
+
+                    <Form.Item>
+                        <Button type="primary" htmlType="submit" className="login-form-button" onClick={this.onClickLogin.bind(this)}>
+                            Log in
+                        </Button>
+                        new user? <a onClick={function(e:Event){
+                            setRegisterVisible(true);
+                        }.bind(this)}>register now!</a>
+                    </Form.Item>
+                </Form>
+                <Modal title="Basic Modal" visible={this.props.showRegister} onOk={(e: React.MouseEvent<HTMLElement>)=>{
+                    setRegisterVisible(false);
+                }} onCancel={(e: React.MouseEvent<HTMLElement>)=>{
+                    setRegisterVisible(false);
+                }}>
+                    <p>Some contents...</p>
+                    <p>Some contents...</p>
+                    <p>Some contents...</p>
+                </Modal>
             </div>
         );
     }
