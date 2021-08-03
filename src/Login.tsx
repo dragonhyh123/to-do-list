@@ -16,7 +16,7 @@ interface propsType {
     passWord: string,
     history: history,
     showRegister: boolean,
-    setRegisterVisible: (boolean)=>void
+    setRegisterVisible: (boolean) => void
 }
 
 interface stateType {
@@ -36,11 +36,11 @@ const mapStateToProps = (state) => {
 
 // 如果mapDispatchToProps是一个对象，它的每个键名也是对应 UI 组件的同名参数，键值应该是一个函数，会被当作 Action creator,
 // 返回的 Action 会由 Redux 自动发出。举例来说，上面的mapDispatchToProps写成对象就是下面这样。
-const mapDispatchToProps = (dispatch: Function): { getUserName: (Event) => void, getPassWord: (Event) => void, setRegisterVisible: (boolean)=>void} => {
+const mapDispatchToProps = (dispatch: Function): { getUserName: (Event) => void, getPassWord: (Event) => void, setRegisterVisible: (boolean) => void } => {
     return {
         getUserName: (e: Event) => { dispatch(setUserName(e)) },
         getPassWord: (e: Event) => { dispatch(setPassWord(e)) },
-        setRegisterVisible: (visible:boolean) => { dispatch(setRigister(visible)) }
+        setRegisterVisible: (visible: boolean) => { dispatch(setRigister(visible)) }
     }
 }
 
@@ -65,11 +65,11 @@ class LoginComponent extends React.Component<propsType, stateType>{
         return (
             <div id="container" className="container">
                 <Form name="normal_login" className="login-form" initialValues={{ remember: true }}>
-                    <Form.Item name="username" rules={[{ required: true, message: 'Please input your Username!' }]}>
+                    <Form.Item name="username" rules={[{ required: true, message: 'Please input your Username' }]}>
                         <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Username" onChange={getUserName} />
                     </Form.Item>
 
-                    <Form.Item name="password" rules={[{ required: true, message: 'Please input your Password!' }]}>
+                    <Form.Item name="password" rules={[{ required: true, message: 'Please input your Password' }]}>
                         <Input prefix={<LockOutlined className="site-form-item-icon" />} type="password" placeholder="Password" onChange={getPassWord} />
                     </Form.Item>
 
@@ -86,19 +86,29 @@ class LoginComponent extends React.Component<propsType, stateType>{
                         <Button type="primary" htmlType="submit" className="login-form-button" onClick={this.onClickLogin.bind(this)}>
                             Log in
                         </Button>
-                        new user? <a onClick={function(e:Event){
+                        new user? <a onClick={function (e: Event) {
                             setRegisterVisible(true);
                         }.bind(this)}>register now!</a>
                     </Form.Item>
                 </Form>
-                <Modal title="Basic Modal" visible={this.props.showRegister} onOk={(e: React.MouseEvent<HTMLElement>)=>{
+                <Modal title="Basic Modal" visible={this.props.showRegister} onOk={(e: React.MouseEvent<HTMLElement>) => {
                     setRegisterVisible(false);
-                }} onCancel={(e: React.MouseEvent<HTMLElement>)=>{
+                }} onCancel={(e: React.MouseEvent<HTMLElement>) => {
                     setRegisterVisible(false);
                 }}>
-                    <p>Some contents...</p>
-                    <p>Some contents...</p>
-                    <p>Some contents...</p>
+                    <Form name="register" className="register-form" labelCol={{span: 8}} wrapperCol={{span: 16}}>
+                        <Form.Item name="username" label="Username" rules={[{ required: true, message: 'Please input your Username' }]}>
+                            <Input />
+                        </Form.Item>
+
+                        <Form.Item name="password" label="Password" rules={[{ required: true, message: 'Please input your Password' }]}>
+                            <Input />
+                        </Form.Item>
+
+                        <Form.Item name="password1" label="Password Again" rules={[{ required: true, message: 'Please input your Password' }]}>
+                            <Input />
+                        </Form.Item>
+                    </Form>
                 </Modal>
             </div>
         );
