@@ -15,16 +15,22 @@ function login(state:state={userName:"",passWord:"",showRegister:false,registerN
     switch (action.type) {
         case Set_UserName:
             currentValue.userName = action.value as string;
+            return currentValue;
         case Set_PassWord:
             currentValue.passWord = action.value as string;
+            return currentValue;
         case Set_Register:
             currentValue.showRegister = action.value as boolean;
+            return currentValue;
         case Set_Register_Name:
             currentValue.registerName = action.value as string;
+            return currentValue;
         case Set_Register_Password:
             currentValue.registerPassword = action.value as string;
+            return currentValue;
         case Set_Register_Password1:
             currentValue.registerPassword1 = action.value as string;
+            return currentValue;
         default:
             return currentValue;
     }

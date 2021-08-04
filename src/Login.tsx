@@ -1,5 +1,5 @@
 import React = require('react');
-import { Input, Button, Form, Checkbox, Modal } from 'antd';
+import { Input, Button, Form, Checkbox, Modal, message } from 'antd';
 import 'antd/dist/antd.css';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import '../style/App.scss';
@@ -60,7 +60,7 @@ class LoginComponent extends React.Component<propsType, stateType>{
             const path = `/Board/${this.props.userName}`;
             this.props.history.push(path);
         } else {
-            alert(result.data.message);
+            message.error(result.data.message)
         }
     }
 
@@ -101,7 +101,24 @@ class LoginComponent extends React.Component<propsType, stateType>{
                         }.bind(this)}>register now!</a>
                     </Form.Item>
                 </Form>
-                <Modal title="Basic Modal" visible={this.props.showRegister} onOk={(e: React.MouseEvent<HTMLElement>) => {
+                <Modal title="User registration" visible={this.props.showRegister} destroyOnClose={true} maskClosable={false} onOk={async (e: React.MouseEvent<HTMLElement>) => {
+                    if(!this.props.registerName){
+                        message.error('Please input user name');
+                        return;
+                    }else if(!this.props.registerPassword){
+                        message.error('Please input password');
+                        return;
+                    }else if(this.props.registerPassword!==this.props.registerPassword1){
+                        message.error('The password is not the same');
+                        return;
+                    }
+
+                    let result: any = await axios.post('http://localhost:3000/register', { userName: this.props.registerName, password: this.props.registerPassword });
+                    if(result.status===200&&result.data.status==='success'){
+                        message.success("Register Success");
+                    }else{
+                        message.error(result.data.message)
+                    }
                     setValue(Set_Register,false);
                 }} onCancel={(e: React.MouseEvent<HTMLElement>) => {
                     setValue(Set_Register,false);
