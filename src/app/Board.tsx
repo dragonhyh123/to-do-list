@@ -83,7 +83,7 @@ export class Board extends React.Component<boardProps, boardState>{
                     <Content
                         className="site-layout-background"
                         style={{
-                            margin: '24px 16px',
+                            margin: '24px 16px 0px 16px',
                             padding: 24,
                             minHeight: 280,
                         }}>
