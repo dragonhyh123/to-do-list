@@ -89,7 +89,7 @@ export class Board extends React.Component<boardProps, boardState>{
                         }}>
                         Content
                     </Content>
-                    <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Dragon</Footer>
+                    <Footer style={{ textAlign: 'center' }}>Ant Design ©2021 Created by Dragon</Footer>
                 </Layout>
             </Layout>)
     }
