@@ -1,22 +1,23 @@
 import React = require('react');
 import { Input, Button, Form, Checkbox, Modal } from 'antd';
 import 'antd/dist/antd.css';
-import { EyeInvisibleOutlined, EyeTwoTone, UserOutlined, LockOutlined } from '@ant-design/icons';
+import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import '../style/App.scss';
 import { connect } from "react-redux";
-import { setUserName, setPassWord, setRigister } from '../src/actions/index';
+import { setValue, Set_UserName, Set_PassWord, Set_Register, Set_Register_Name, Set_Register_Password, Set_Register_Password1 } from '../src/actions/index';
 import { ChangeEventHandler } from "react";
 import { history } from 'react-router-dom';
 import axios from 'axios';
 
 interface propsType {
-    getUserName: ChangeEventHandler,
-    getPassWord: ChangeEventHandler,
     userName: string,
     passWord: string,
     history: history,
     showRegister: boolean,
-    setRegisterVisible: (boolean) => void
+    registerName:string,
+    registerPassword:string,
+    registerPassword1:string,
+    setValue:(type:string,value:string|boolean)=>void
 }
 
 interface stateType {
@@ -30,17 +31,20 @@ const mapStateToProps = (state) => {
     return {
         userName: state.login.userName,
         passWord: state.login.passWord,
-        showRegister: state.login.showRegister
+        showRegister: state.login.showRegister,
+        registerName: state.login.registerName,
+        registerPassword:state.login.registerPassword,
+        registerPassword1:state.login.registerPassword1
     }
 }
 
 // 如果mapDispatchToProps是一个对象，它的每个键名也是对应 UI 组件的同名参数，键值应该是一个函数，会被当作 Action creator,
 // 返回的 Action 会由 Redux 自动发出。举例来说，上面的mapDispatchToProps写成对象就是下面这样。
-const mapDispatchToProps = (dispatch: Function): { getUserName: (Event) => void, getPassWord: (Event) => void, setRegisterVisible: (boolean) => void } => {
+const mapDispatchToProps = (dispatch: Function): { setValue:(type:string,value:any) => void} => {
     return {
-        getUserName: (e: Event) => { dispatch(setUserName(e)) },
-        getPassWord: (e: Event) => { dispatch(setPassWord(e)) },
-        setRegisterVisible: (visible: boolean) => { dispatch(setRigister(visible)) }
+        setValue: (type:string,value:string|boolean) => { 
+            dispatch(setValue(type,value as string));
+         }
     }
 }
 
@@ -61,16 +65,22 @@ class LoginComponent extends React.Component<propsType, stateType>{
     }
 
     render() {
-        const { getUserName, getPassWord, setRegisterVisible } = this.props;
+        const { setValue } = this.props;
         return (
             <div id="container" className="container">
                 <Form name="normal_login" className="login-form" initialValues={{ remember: true }}>
                     <Form.Item name="username" rules={[{ required: true, message: 'Please input your Username' }]}>
-                        <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Username" onChange={getUserName} />
+                        <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Username" onChange={function(e:Event){
+                            let value:string = e.currentTarget.value;
+                            setValue(Set_UserName,value);
+                        }.bind(this)} />
                     </Form.Item>
 
                     <Form.Item name="password" rules={[{ required: true, message: 'Please input your Password' }]}>
-                        <Input prefix={<LockOutlined className="site-form-item-icon" />} type="password" placeholder="Password" onChange={getPassWord} />
+                        <Input prefix={<LockOutlined className="site-form-item-icon" />} type="password" placeholder="Password" onChange={function(e:Event){
+                            let value:string = e.currentTarget.value;
+                            setValue(Set_PassWord,value);
+                        }.bind(this)} />
                     </Form.Item>
 
                     <Form.Item>
@@ -87,26 +97,35 @@ class LoginComponent extends React.Component<propsType, stateType>{
                             Log in
                         </Button>
                         new user? <a onClick={function (e: Event) {
-                            setRegisterVisible(true);
+                            setValue(Set_Register,true);
                         }.bind(this)}>register now!</a>
                     </Form.Item>
                 </Form>
                 <Modal title="Basic Modal" visible={this.props.showRegister} onOk={(e: React.MouseEvent<HTMLElement>) => {
-                    setRegisterVisible(false);
+                    setValue(Set_Register,false);
                 }} onCancel={(e: React.MouseEvent<HTMLElement>) => {
-                    setRegisterVisible(false);
+                    setValue(Set_Register,false);
                 }}>
                     <Form name="register" className="register-form" labelCol={{span: 8}} wrapperCol={{span: 16}}>
                         <Form.Item name="username" label="Username" rules={[{ required: true, message: 'Please input your Username' }]}>
-                            <Input />
+                            <Input value={this.props.registerName} onChange={function(e:Event){
+                                let value:string = e.currentTarget.value;
+                                setValue(Set_Register_Name,value);
+                            }.bind(this)}/>
                         </Form.Item>
 
                         <Form.Item name="password" label="Password" rules={[{ required: true, message: 'Please input your Password' }]}>
-                            <Input />
+                            <Input value={this.props.registerPassword} onChange={function(e:Event){
+                                let value:string = e.currentTarget.value;
+                                setValue(Set_Register_Password,value);
+                            }.bind(this)}/>
                         </Form.Item>
 
                         <Form.Item name="password1" label="Password Again" rules={[{ required: true, message: 'Please input your Password' }]}>
-                            <Input />
+                            <Input value={this.props.registerPassword1} onChange={function(e:Event){
+                                let value:string = e.currentTarget.value;
+                                setValue(Set_Register_Password1,value);
+                            }.bind(this)}/>
                         </Form.Item>
                     </Form>
                 </Modal>

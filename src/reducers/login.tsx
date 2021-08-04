@@ -1,15 +1,32 @@
-import {Set_UserName, Set_PassWord, Set_Register} from '../actions';
+import {Set_UserName, Set_PassWord, Set_Register, Set_Register_Name, Set_Register_Password, Set_Register_Password1} from '../actions';
 
-function login(state:{userName:string,passWord:string,showRegister:boolean}={userName:"",passWord:"",showRegister:false}, action:{type:string,value:string}) {
+type state = {
+    userName:string,
+    passWord:string,
+    showRegister:boolean,
+    registerName:string,
+    registerPassword:string,
+    registerPassword1:string
+}
+
+function login(state:state={userName:"",passWord:"",showRegister:false,registerName:"",registerPassword:"",registerPassword1:""}, action:{type:string,value:string|boolean}) {
+    let currentValue:state = {...state};
+
     switch (action.type) {
         case Set_UserName:
-            return{userName:action.value,passWord:state.passWord,showRegister:state.showRegister};
+            currentValue.userName = action.value as string;
         case Set_PassWord:
-            return{userName:state.userName,passWord:action.value,showRegister:state.showRegister};
+            currentValue.passWord = action.value as string;
         case Set_Register:
-            return{userName:state.userName,passWord:state.passWord,showRegister:action.value};
+            currentValue.showRegister = action.value as boolean;
+        case Set_Register_Name:
+            currentValue.registerName = action.value as string;
+        case Set_Register_Password:
+            currentValue.registerPassword = action.value as string;
+        case Set_Register_Password1:
+            currentValue.registerPassword1 = action.value as string;
         default:
-            return {userName:"",passWord:"",showRegister:false};
+            return currentValue;
     }
 }
 
