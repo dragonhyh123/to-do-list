@@ -1,11 +1,13 @@
 import * as React from 'react';
-import { Menu, Layout } from 'antd';
+import { Menu, Layout, Button } from 'antd';
 import { MailOutlined, AppstoreOutlined, SettingOutlined } from '@ant-design/icons';
 import '../../style/App.scss';
 import { match, history, location } from 'react-router-dom';
 import { MenuInfo } from 'rc-menu/lib/interface';
 import { connect } from "react-redux";
 import { setValue, Set_Current_Tab } from '../actions/index';
+import Calender from './Calendar';
+import List from './List';
 
 const useState = React.useState;
 const { Header, Sider, Content, Footer } = Layout;
@@ -48,13 +50,15 @@ interface detailContent {
 
 function NavigationBar(props: titleBarProps) {
     return (
-        <Menu theme="dark" selectedKeys={[props.currentTab]} mode="inline" style={{ width: 256 }} onClick={props.changeTab}>
+        <Menu theme="dark" selectedKeys={[props.currentTab]} defaultOpenKeys={['list']} mode="inline" style={{ width: 256 }} onClick={props.changeTab} className='menu'>
             <Menu.Item key="overview" icon={<MailOutlined />}>
                 OverView
             </Menu.Item>
-            <Menu.Item key="detail" icon={<AppstoreOutlined />}>
-                Plan Detail
-            </Menu.Item>
+            <Menu.SubMenu key='list' title='Planning Group' icon={<AppstoreOutlined />}>
+                <Menu.Item key="default" icon={<AppstoreOutlined />}>
+                    Default
+                </Menu.Item>
+            </Menu.SubMenu>
         </Menu>);
 }
 
@@ -66,7 +70,7 @@ function OverviewContent(props: overviewContent) {
             padding: 24,
             minHeight: 280,
         }}>
-        Overview
+        <Calender/>
     </Content>
 }
 
@@ -78,7 +82,7 @@ function DetailContent(props: detailContent) {
             padding: 24,
             minHeight: 280,
         }}>
-        Detail
+        <List/>
     </Content>
 }
 
@@ -94,7 +98,7 @@ export class BoardComponent extends React.Component<boardProps, boardState>{
             case 'overview':
                 content = <OverviewContent />;
                 break;
-            case 'detail':
+            case 'default':
                 content = <DetailContent />;
                 break;
             default:
@@ -102,13 +106,14 @@ export class BoardComponent extends React.Component<boardProps, boardState>{
 
         return (
             <Layout>
-                <Sider collapsible={true} width={256} style={{ overflow: 'auto', height: '100vh', left: 0 }}>
-                    <div className="logo" />
+                <Sider collapsible={false} width={256} style={{ overflow: 'auto', height: '100vh', left: 0 }}>
+                    <div className="logo">
+                        <span className='title'>Today: 10</span>
+                    </div>
                     <NavigationBar currentTab={this.props.currentTab} changeTab={this.props.changeTab.bind(this)} />
                 </Sider>
                 <Layout className="site-layout">
                     <Header className="site-layout-background" style={{ margin: '24px 16px 0px 16px' }}>
-                        {/* <Title text={this.props.match.params.text}/> */}
                     </Header>
                     {content}
                     <Footer style={{ textAlign: 'center' }}>Ant Design ©2021 Created by Dragon</Footer>
