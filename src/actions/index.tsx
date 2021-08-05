@@ -4,12 +4,16 @@ import * as React from 'react';
 /*
  * action 类型
  */
+//For Login page
 export const Set_UserName = 'Set_UerName';
 export const Set_PassWord = 'Set_PassWord';
 export const Set_Register = 'Set_Register';
 export const Set_Register_Name = 'Set_Register_Name';
 export const Set_Register_Password = 'Set_Register_Password';
 export const Set_Register_Password1 = 'Set_Register_Password1';
+
+//For Board page
+export const Set_Current_Tab = 'Set_Current_Tab';
 
 type Event = React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>;
 /*

@@ -1,9 +1,9 @@
 import { combineReducers } from 'redux';
 import login from './login';
-// import visibilityFilter from './visibilityFilter';
+import board from './board';
 
 const reducer = combineReducers({
-    login
+    login, board
 });
 
 export default reducer;

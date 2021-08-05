@@ -40,7 +40,7 @@ const mapStateToProps = (state) => {
 
 // 如果mapDispatchToProps是一个对象，它的每个键名也是对应 UI 组件的同名参数，键值应该是一个函数，会被当作 Action creator,
 // 返回的 Action 会由 Redux 自动发出。举例来说，上面的mapDispatchToProps写成对象就是下面这样。
-const mapDispatchToProps = (dispatch: Function): { setValue:(type:string,value:any) => void} => {
+const mapDispatchToProps = (dispatch: Function): { setValue:(type:string,value:string|boolean) => void} => {
     return {
         setValue: (type:string,value:string|boolean) => { 
             dispatch(setValue(type,value as string));
